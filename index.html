@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Tar Heel Typer</title>
+    <style type="text/css">
+      @import "http://ajax.googleapis.com/ajax/libs/dojo/1.5.0/dojo/resources/dojo.css";
+      @import "http://ajax.googleapis.com/ajax/libs/dojo/1.5.0/dijit/themes/claro/claro.css";
+      @import "css/application.css";
+    </style>
+	<script type="text/javascript">
+        var djConfig = {
+            isDebug: false,
+            parseOnLoad: true,
+            baseUrl: './',
+            modulePaths: {'myapp' : 'widgets'}
+        };
+    </script>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/dojo/1.5.0/dojo/dojo.xd.js"></script>
+    <script type="text/javascript" src="/libs/uow/trace.js"></script>
+    <script type="text/javascript" src="/libs/uow.js"></script>
+    <script type="text/javascript" src="application.js"></script>
+	<script type="text/javascript" src="bindings.js"></script>
+	<script type="text/javascript" src="lessons.js"></script>
+	<script type="text/javascript">
+		// Keep track of the lesson we are on - start with free mode
+		var lessonIndex = 0;
+		
+		// Pass messages to this function to have them spoken and displayed in the footer
+		function talk(message) {
+			uow.getAudio().then(function(a) {
+			  a.say({text : message});
+			});
+			
+			footer = document.getElementById("footer");
+			footer.innerHTML = message;
+		}
+		
+		// Listen for key events
+		uow.ui.connectKeys();
+		
+		// 
+		function keyUp(e) {
+			//talk(translateKeys(e.keyCode));
+			//console.log(e.keyCode);
+			if(lessonIndex == 0) {
+				var message = freeModeBindings[String.fromCharCode(e.keyCode)];
+				
+				if(message != undefined)
+					talk(message);
+			}
+		}
+		
+		// For non-numeric or alphabetic keys, translate them to be spoken
+		function translateKeys(keyCode) {
+			if((keyCode >= 48 && keyCode <= 57) || (keyCode >= 65 && keyCode <= 90) || (keyCode >= 97 && keyCode <= 122))
+				return String.fromCharCode(keyCode);
+			else {
+				return keyMappings[keyCode] || "Unknown key pressed: " + keyCode;
+			}
+		}
+		
+		// Speak a greeting when loaded, then subscribe to key events
+		dojo.addOnLoad(
+		  function(){
+			talk("Welcome to Tar Heel Typer!  Try typing a letter in free mode.  To choose a lesson, use the up and down arrows, and then enter to select.");
+			dojo.subscribe('/uow/key/up', keyUp);
+		  }
+		);
+	</script>
+  </head>
+  <body class="claro">
+    <div dojoType="dijit.layout.BorderContainer" liveSplitters="true">
+      <div dojoType="dijit.layout.ContentPane" region="top" splitter="false">
+        <h1>Tar Heel Typer</h1>
+		<h2>Current Lesson: <span id="currentLesson">Free mode</span></h2>
+      </div>
+        <div dojoType="dijit.layout.ContentPane" region="center" title="Welcome" id="Main" tabindex="1" selected="true">
+          <p>This application is designed to function as a typing tutor for blind children</p>
+        </div>
+		<div dojoType="dijit.layout.ContentPane" id="footer" region="bottom" splitter="false"></div>
+      </div>
+    </div>
+  </body>
+</html>
