@@ -19,3 +19,9 @@ h1 {
 #sidebar {
     width: 300px;
 }
+
+#letterDisplay {
+	text-align: center;
+	margin-top: 0;
+	margin-bottom: 0;
+}

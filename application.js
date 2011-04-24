@@ -6,15 +6,17 @@
  *
  * Copyright UNC Open Web Team 2010. All Rights Reserved.
  */
-dojo.provide('myapp.Main');
+dojo.provide('tht.Main');
+
 dojo.require('dojo.parser');
 dojo.require('dijit.layout.BorderContainer');
 dojo.require('dijit.layout.ContentPane');
+dojo.require('dojo.hash');
 
 // adjust the namespace if you changed it in index.html; this widget serves
 // as our main controller to do stuff across the whole app and kick off the
 // app when the page loads
-dojo.declare('myapp.Main', null, {
+dojo.declare('tht.Main', null, {
     constructor: function() {
        
     }
@@ -24,5 +26,5 @@ dojo.ready(function() {
     // build our main widget when everything is ready; adjust the name here
     // if you change it above but otherwise leave this alone and do all 
     // work in the widget above
-    var app = new myapp.Main();        
+    var app = new tht.Main();        
 });

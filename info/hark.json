@@ -1,0 +1,69 @@
+{
+    "identifier" : "url",
+    "items" : [
+        {
+            "url" : "tht#freemode",
+            "label" : {
+                "en-us" : "Free typing"
+            },
+            "description" : {
+                "en-us" : "Explore the keyboard and listen to sound clips."
+            },
+            "tags" : {
+                "en-us" : "typing, keyboard, sounds"
+            },
+            "media" : {
+                "icon" : "tht/info/icon.png",
+                "screenshots" : ["tht/info/screenshot.png"]
+            }
+        },
+       {
+            "url" : "tht#homerow",
+            "label" : {
+                "en-us" : "Home row"
+            },
+            "description" : {
+                "en-us" : "Learn about the home row"
+            },
+            "tags" : {
+                "en-us" : "typing, keyboard, sounds"
+            },
+            "media" : {
+                "icon" : "tht/info/icon.png",
+                "screenshots" : ["tht/info/screenshot.png"]
+            }
+        },
+		{
+            "url" : "tht#alphabet",
+            "label" : {
+                "en-us" : "Alphabet"
+            },
+            "description" : {
+                "en-us" : "Learn about the alphabet"
+            },
+            "tags" : {
+                "en-us" : "typing, keyboard, sounds, alphabet"
+            },
+            "media" : {
+                "icon" : "tht/info/icon.png",
+                "screenshots" : ["tht/info/screenshot.png"]
+            }
+        },
+		{
+            "url" : "tht#leftHandDrills",
+            "label" : {
+                "en-us" : "Left hand drills"
+            },
+            "description" : {
+                "en-us" : "Practice typing with your left hand"
+            },
+            "tags" : {
+                "en-us" : "typing, keyboard, sounds"
+            },
+            "media" : {
+                "icon" : "tht/info/icon.png",
+                "screenshots" : ["tht/info/screenshot.png"]
+            }
+        }
+    ]
+}

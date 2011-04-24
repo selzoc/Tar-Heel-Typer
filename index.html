@@ -13,7 +13,7 @@
             isDebug: false,
             parseOnLoad: true,
             baseUrl: './',
-            modulePaths: {'myapp' : 'widgets'}
+            modulePaths: {'tht' : 'sounds'}
         };
     </script>
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/dojo/1.5.0/dojo/dojo.xd.js"></script>
@@ -22,13 +22,27 @@
     <script type="text/javascript" src="application.js"></script>
 	<script type="text/javascript" src="bindings.js"></script>
 	<script type="text/javascript" src="lessons.js"></script>
+	<script type="text/javascript" src="distance.js"></script>
 	<script type="text/javascript">
-		// Keep track of the lesson we are on - start with free mode
-		var lessonIndex = 0;
+		// Get the audio api controller
+		var audio = uow.getAudio();
+		
+		// Listen for key events
+		uow.ui.connectKeys();
+		
+		// Current lesson
+		var lesson;
+		var index;
+		var sequenceIndex;
 		
 		// Pass messages to this function to have them spoken and displayed in the footer
-		function talk(message) {
-			uow.getAudio().then(function(a) {
+		// optional stop parameter preempts the previous speech
+		function talk(message, stop) {
+			console.log(message + "\t" + stop);
+			audio.then(function(a) {
+			  if(stop) {
+				a.stop();
+			  }
 			  a.say({text : message});
 			});
 			
@@ -36,19 +50,74 @@
 			footer.innerHTML = message;
 		}
 		
-		// Listen for key events
-		uow.ui.connectKeys();
+		// Pass urls to this function to have the sound played
+		function playSound(soundUrl) {
+			audio.then(function(a) {
+			  a.play({url : soundUrl});
+			});
+		}
 		
-		// 
-		function keyUp(e) {
-			//talk(translateKeys(e.keyCode));
-			//console.log(e.keyCode);
-			if(lessonIndex == 0) {
-				var message = freeModeBindings[String.fromCharCode(e.keyCode)];
-				
-				if(message != undefined)
-					talk(message);
+		// Display stuff big in the center of the screen
+		function bigDisplay(text) {
+			document.getElementById('letterDisplay').innerHTML = text;
+		}
+		
+		// Free mode key callback
+		function freemodeCallback(e) {
+			var text = freeModeBindings[String.fromCharCode(e.keyCode)][0];
+			var sound = freeModeBindings[String.fromCharCode(e.keyCode)][1];
+			
+			bigDisplay(String.fromCharCode(e.keyCode));
+			
+			if(text != undefined) {
+				talk("'" + text + "'", true);
 			}
+			if(sound != undefined) {
+				playSound(sound);
+			}
+		}
+		
+		// Lesson key callback
+		function lessonCallback(e) {
+			// Store the key pressed as well as the key expected to be hit next in the lesson
+			var keyPressed = String.fromCharCode(e.keyCode);
+			var expectedKey = lesson.sequences[index][sequenceIndex];
+			bigDisplay(keyPressed);
+			
+			// If they typed the next letter in the sequence
+			if(keyPressed.toLowerCase() == expectedKey) {
+				talk("'" + keyPressed + "'", true);
+				sequenceIndex++;
+			}
+			// If not, direct them where to type and remind then of what is left to type
+			else {
+				talk("You typed '" + keyPressed  + "'. " + errorFeedback(expectedKey, keyPressed) + " for '" + expectedKey + "'", true);
+				talk("Then type " + lesson.sequences[index].substring(sequenceIndex), false);
+			}
+		
+			// If the sequence is done, reset the variables and prompt for the next sequence
+			if(sequenceIndex == lesson.sequences[index].length) {
+				sequenceIndex = 0;
+				index++;
+				
+				talk("'" + keyPressed + "'; " + lesson.prompts[index], true);
+			}
+			
+			// If the lesson is done, talk the lesson end
+			if(index == lesson.sequences.length) {
+				talk("'" + keyPressed + "'; " + lesson.finish, true);
+			}
+		}
+		
+		// Sets the current lesson
+		function loadLesson(lessonName) {
+			index = 0;
+			sequenceIndex = 0;
+			lesson = lessons[lessonName];
+			
+			currentLesson.innerHTML = lesson.name;
+			
+			talk(lesson.prompts[index], true);
 		}
 		
 		// For non-numeric or alphabetic keys, translate them to be spoken
@@ -60,12 +129,32 @@
 			}
 		}
 		
-		// Speak a greeting when loaded, then subscribe to key events
+		// Subscribe key events to the appropriate callback function based on the hash tag
+		function initialize(hashValue){
+			// See if this is a valid lesson
+			if(lessons[hashValue] != undefined) {
+				loadLesson(hashValue);
+				dojo.subscribe('/uow/key/up', lessonCallback);
+			}
+			// If not, fall back to free mode
+			else {
+				talk("Try typing a letter in free mode.", true);
+				dojo.subscribe('/uow/key/up', freemodeCallback);
+				currentLesson.innerHTML = "Free mode";
+			}
+		}
+		
 		dojo.addOnLoad(
-		  function(){
-			talk("Welcome to Tar Heel Typer!  Try typing a letter in free mode.  To choose a lesson, use the up and down arrows, and then enter to select.");
-			dojo.subscribe('/uow/key/up', keyUp);
-		  }
+			function() {
+				// Pick the lesson or free mode based on the hash part of the url
+				initialize(dojo.hash());
+				
+				// Determine the best size for letter display on load
+				var letterHeight = document.getElementById('Main').clientHeight * (3/4);
+				var letterElement = document.getElementById('letterDisplay');
+				
+				letterElement.setAttribute('style', 'font-size:' + letterHeight + 'px');
+			}
 		);
 	</script>
   </head>
@@ -73,10 +162,10 @@
     <div dojoType="dijit.layout.BorderContainer" liveSplitters="true">
       <div dojoType="dijit.layout.ContentPane" region="top" splitter="false">
         <h1>Tar Heel Typer</h1>
-		<h2>Current Lesson: <span id="currentLesson">Free mode</span></h2>
+		<h2>Current Lesson: <span id="currentLesson"></span></h2>
       </div>
         <div dojoType="dijit.layout.ContentPane" region="center" title="Welcome" id="Main" tabindex="1" selected="true">
-          <p>This application is designed to function as a typing tutor for blind children</p>
+          <p id="letterDisplay"></p>
         </div>
 		<div dojoType="dijit.layout.ContentPane" id="footer" region="bottom" splitter="false"></div>
       </div>
