@@ -54,7 +54,13 @@
 		
 		function talkLetters(letters) {
 			for(var i=0; i < letters.length; i++) {
-				talk("'" + letters[i] + "'", false);
+				// Semicolon is special case
+				if(letters[i] == ';') {
+					talk("'semicolon'", false);
+				}
+				else {
+					talk("'" + letters[i] + "'", false);
+				}
 			}
 		}
 		
@@ -120,8 +126,10 @@
 				}
 				
 				// Remind them of the next 5 letters
-				talk("Then type ", false);
-				talkLetters(lesson.sequences[index].substring(sequenceIndex + 1, sequenceIndex+5));
+				if(sequenceIndex != lesson.sequences[index].length - 1) {
+					talk("Then type ", false);
+					talkLetters(lesson.sequences[index].substring(sequenceIndex + 1, sequenceIndex+5));
+				}
 			}
 		
 			// If the sequence is done, reset the variables and prompt for the next sequence
@@ -134,7 +142,13 @@
 			
 			// If the lesson is done, talk the lesson end
 			if(index == lesson.sequences.length) {
-				talk("'" + keyPressed + "'; " + lesson.finish, true);
+				// Semicolon is special case
+				if(keyPressed == ';') {
+					talk("'semicolon'; " + lesson.finish, true);
+				}
+				else {
+					talk("'" + keyPressed + "'; " + lesson.finish, true);
+				}
 			}
 		}
 		
