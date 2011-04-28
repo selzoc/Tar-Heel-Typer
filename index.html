@@ -43,11 +43,19 @@
 			  if(stop) {
 				a.stop();
 			  }
+			  // Slow down the rate to 150 WPM
+			  a.setProperty({name : 'rate', value : 150});
 			  a.say({text : message});
 			});
 			
 			footer = document.getElementById("footer");
 			footer.innerHTML = message;
+		}
+		
+		function talkLetters(letters) {
+			for(var i=0; i < letters.length; i++) {
+				talk("'" + letters[i] + "'", false);
+			}
 		}
 		
 		// Pass urls to this function to have the sound played
@@ -81,18 +89,39 @@
 		function lessonCallback(e) {
 			// Store the key pressed as well as the key expected to be hit next in the lesson
 			var keyPressed = String.fromCharCode(e.keyCode);
+			
+			// Semicolon is special case
+			if(e.keyCode == 186)
+				keyPressed = ';';
 			var expectedKey = lesson.sequences[index][sequenceIndex];
 			bigDisplay(keyPressed);
 			
 			// If they typed the next letter in the sequence
-			if(keyPressed.toLowerCase() == expectedKey) {
-				talk("'" + keyPressed + "'", true);
+			if((isLetter(e.keyCode) && keyPressed.toLowerCase() == expectedKey) || keyPressed == expectedKey) {
+				// Semicolon is special case
+				if(keyPressed == ';') {
+					console.log("semicolon!");
+					talk("'semicolon'", true);
+				}
+				else {
+					talk("'" + keyPressed + "'", true);
+				}
+					
 				sequenceIndex++;
 			}
 			// If not, direct them where to type and remind then of what is left to type
 			else {
-				talk("You typed '" + keyPressed  + "'. " + errorFeedback(expectedKey, keyPressed) + " for '" + expectedKey + "'", true);
-				talk("Then type " + lesson.sequences[index].substring(sequenceIndex), false);
+				// Semicolon is special case
+				if(expectedKey == ';') {
+					talk("You typed '" + keyPressed  + "'. " + errorFeedback(expectedKey, keyPressed) + " for 'semicolon'", true);
+				}
+				else {
+					talk("You typed '" + keyPressed  + "'. " + errorFeedback(expectedKey, keyPressed) + " for '" + expectedKey + "'", true);
+				}
+				
+				// Remind them of the next 5 letters
+				talk("Then type ", false);
+				talkLetters(lesson.sequences[index].substring(sequenceIndex + 1, sequenceIndex+5));
 			}
 		
 			// If the sequence is done, reset the variables and prompt for the next sequence
@@ -118,6 +147,16 @@
 			currentLesson.innerHTML = lesson.name;
 			
 			talk(lesson.prompts[index], true);
+		}
+		
+		// Is this a letter?
+		function isLetter(keyCode) {
+			if((keyCode >= 48 && keyCode <= 57) || (keyCode >= 65 && keyCode <= 90) || (keyCode >= 97 && keyCode <= 122)) {
+				return true;
+			}
+			else {
+				return false;
+			}
 		}
 		
 		// For non-numeric or alphabetic keys, translate them to be spoken
