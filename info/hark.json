@@ -26,7 +26,7 @@
                 "en-us" : "Learn about the home row"
             },
             "tags" : {
-                "en-us" : "typing, keyboard, sounds"
+                "en-us" : "typing, keyboard"
             },
             "media" : {
                 "icon" : "tht/info/icon.png",
@@ -42,7 +42,7 @@
                 "en-us" : "Learn about the alphabet"
             },
             "tags" : {
-                "en-us" : "typing, keyboard, sounds, alphabet"
+                "en-us" : "typing, keyboard, alphabet"
             },
             "media" : {
                 "icon" : "tht/info/icon.png",
@@ -58,7 +58,55 @@
                 "en-us" : "Practice typing with your left hand"
             },
             "tags" : {
-                "en-us" : "typing, keyboard, sounds"
+                "en-us" : "typing, keyboard"
+            },
+            "media" : {
+                "icon" : "tht/info/icon.png",
+                "screenshots" : ["tht/info/screenshot.png"]
+            }
+        },
+		{
+            "url" : "tht#math",
+            "label" : {
+                "en-us" : "Math drills"
+            },
+            "description" : {
+                "en-us" : "Practice the number keys with some simple math"
+            },
+            "tags" : {
+                "en-us" : "typing, keyboard, math"
+            },
+            "media" : {
+                "icon" : "tht/info/icon.png",
+                "screenshots" : ["tht/info/screenshot.png"]
+            }
+        },
+		{
+            "url" : "tht#longWords",
+            "label" : {
+                "en-us" : "Longer words"
+            },
+            "description" : {
+                "en-us" : "Practice some longer words"
+            },
+            "tags" : {
+                "en-us" : "typing, keyboard"
+            },
+            "media" : {
+                "icon" : "tht/info/icon.png",
+                "screenshots" : ["tht/info/screenshot.png"]
+            }
+        },
+		{
+            "url" : "tht#lotsOfWords",
+            "label" : {
+                "en-us" : "Lots of words"
+            },
+            "description" : {
+                "en-us" : "Practice typing with many words"
+            },
+            "tags" : {
+                "en-us" : "typing, keyboard"
             },
             "media" : {
                 "icon" : "tht/info/icon.png",
