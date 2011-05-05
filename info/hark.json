@@ -2,7 +2,7 @@
     "identifier" : "url",
     "items" : [
         {
-            "url" : "tht#freemode",
+            "url" : "Tar-Heel-Typer#freemode",
             "label" : {
                 "en-us" : "Free typing"
             },
@@ -13,13 +13,13 @@
                 "en-us" : "typing, keyboard, sounds"
             },
             "media" : {
-                "icon" : "tht/info/icon.png",
-                "screenshots" : ["tht/info/screenshot.png"]
+                "icon" : "Tar-Heel-Typer/info/icon.png",
+                "screenshots" : ["Tar-Heel-Typer/info/screenshot.png"]
             },
 			"attribution" : ""
         },
        {
-            "url" : "tht#homerow",
+            "url" : "Tar-Heel-Typer#homerow",
             "label" : {
                 "en-us" : "Home row"
             },
@@ -30,13 +30,13 @@
                 "en-us" : "typing, keyboard"
             },
             "media" : {
-                "icon" : "tht/info/icon.png",
-                "screenshots" : ["tht/info/screenshot.png"]
+                "icon" : "Tar-Heel-Typer/info/icon.png",
+                "screenshots" : ["Tar-Heel-Typer/info/screenshot.png"]
             },
 			"attribution" : ""
         },
 		{
-            "url" : "tht#alphabet",
+            "url" : "Tar-Heel-Typer#alphabet",
             "label" : {
                 "en-us" : "Alphabet"
             },
@@ -47,13 +47,13 @@
                 "en-us" : "typing, keyboard, alphabet"
             },
             "media" : {
-                "icon" : "tht/info/icon.png",
-                "screenshots" : ["tht/info/screenshot.png"]
+                "icon" : "Tar-Heel-Typer/info/icon.png",
+                "screenshots" : ["Tar-Heel-Typer/info/screenshot.png"]
             },
 			"attribution" : ""
         },
 		{
-            "url" : "tht#leftHandDrills",
+            "url" : "Tar-Heel-Typer#leftHandDrills",
             "label" : {
                 "en-us" : "Left hand drills"
             },
@@ -64,13 +64,13 @@
                 "en-us" : "typing, keyboard"
             },
             "media" : {
-                "icon" : "tht/info/icon.png",
-                "screenshots" : ["tht/info/screenshot.png"]
+                "icon" : "Tar-Heel-Typer/info/icon.png",
+                "screenshots" : ["Tar-Heel-Typer/info/screenshot.png"]
             },
 			"attribution" : ""
         },
 		{
-            "url" : "tht#math",
+            "url" : "Tar-Heel-Typer#math",
             "label" : {
                 "en-us" : "Math drills"
             },
@@ -81,13 +81,13 @@
                 "en-us" : "typing, keyboard, math"
             },
             "media" : {
-                "icon" : "tht/info/icon.png",
-                "screenshots" : ["tht/info/screenshot.png"]
+                "icon" : "Tar-Heel-Typer/info/icon.png",
+                "screenshots" : ["Tar-Heel-Typer/info/screenshot.png"]
             },
 			"attribution" : ""
         },
 		{
-            "url" : "tht#longWords",
+            "url" : "Tar-Heel-Typer#longWords",
             "label" : {
                 "en-us" : "Longer words"
             },
@@ -98,13 +98,13 @@
                 "en-us" : "typing, keyboard"
             },
             "media" : {
-                "icon" : "tht/info/icon.png",
-                "screenshots" : ["tht/info/screenshot.png"]
+                "icon" : "Tar-Heel-Typer/info/icon.png",
+                "screenshots" : ["Tar-Heel-Typer/info/screenshot.png"]
             },
 			"attribution" : ""
         },
 		{
-            "url" : "tht#lotsOfWords",
+            "url" : "Tar-Heel-Typer#lotsOfWords",
             "label" : {
                 "en-us" : "Lots of words"
             },
@@ -115,8 +115,8 @@
                 "en-us" : "typing, keyboard"
             },
             "media" : {
-                "icon" : "tht/info/icon.png",
-                "screenshots" : ["tht/info/screenshot.png"]
+                "icon" : "Tar-Heel-Typer/info/icon.png",
+                "screenshots" : ["Tar-Heel-Typer/info/screenshot.png"]
             },
 			"attribution" : ""
         }
