@@ -24,6 +24,7 @@ dojo.declare('tht.Main', null, {
 	soundVolume: 1.0,
 	speechRate: 200,
 	currentLesson: "",
+	playingState: "none",
 	
     constructor: function() {
 	   currentLesson=document.getElementById('currentLesson');
@@ -37,6 +38,12 @@ dojo.declare('tht.Main', null, {
 		this.speechVolume=prefs.speechVolume;
 		this.soundVolume=prefs.soundVolume;
 		this.speechRate=prefs.speechRate;
+		
+		if(audio && this.playingState=="playing")
+			this.audio.setProperty({name : 'volume', value : this.masterVolume*this.soundVolume, immediate : true});
+			
+		else if(audio && this.playingState=="saying")
+			this.audio.setProperty({name : 'volume', value : this.masterVolume*this.speechVolume, immediate : true});
 	}
 });
 
@@ -44,5 +51,5 @@ dojo.ready(function() {
     // build our main widget when everything is ready; adjust the name here
     // if you change it above but otherwise leave this alone and do all 
     // work in the widget above
-    app = new tht.Main();        
+    app = new tht.Main();
 });
