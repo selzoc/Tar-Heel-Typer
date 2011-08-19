@@ -13,6 +13,8 @@ dojo.require('dijit.layout.BorderContainer');
 dojo.require('dijit.layout.ContentPane');
 dojo.require('dojo.hash');
 
+var app=null;
+
 // adjust the namespace if you changed it in index.html; this widget serves
 // as our main controller to do stuff across the whole app and kick off the
 // app when the page loads
@@ -39,5 +41,5 @@ dojo.ready(function() {
     // build our main widget when everything is ready; adjust the name here
     // if you change it above but otherwise leave this alone and do all 
     // work in the widget above
-    var app = new tht.Main();        
+    app = new tht.Main();        
 });
