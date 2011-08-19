@@ -159,7 +159,7 @@
 			sequenceIndex = 0;
 			lesson = lessons[lessonName];
 			
-			currentLesson.innerHTML = lesson.name;
+			//currentLesson.innerHTML = lesson.name;
 			
 			talk(lesson.prompts[index], true);
 		}
@@ -194,7 +194,7 @@
 			else {
 				talk("Try typing a letter in free mode.", true);
 				dojo.subscribe('/uow/key/up', freemodeCallback);
-				currentLesson.innerHTML = "Free mode";
+				//currentLesson.innerHTML = "Free mode";
 			}
 		}
 		
