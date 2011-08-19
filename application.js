@@ -40,10 +40,10 @@ dojo.declare('tht.Main', null, {
 		this.speechRate=prefs.speechRate;
 		
 		if(audio && this.playingState=="playing")
-			this.audio.setProperty({name : 'volume', value : this.masterVolume*this.soundVolume, immediate : true});
+			audio.setProperty({name : 'volume', value : this.masterVolume*this.soundVolume, immediate : true});
 			
 		else if(audio && this.playingState=="saying")
-			this.audio.setProperty({name : 'volume', value : this.masterVolume*this.speechVolume, immediate : true});
+			audio.setProperty({name : 'volume', value : this.masterVolume*this.speechVolume, immediate : true});
 	}
 });
 
