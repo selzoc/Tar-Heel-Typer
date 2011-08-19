@@ -25,7 +25,7 @@
     <script type="text/javascript" src="distance.js"></script>
     <script type="text/javascript">
 		// Get the audio api controller
-		var audio = uow.getAudio();
+		var audio = null;
 		var currentLesson="";
 		var playingState="none";
 
@@ -205,16 +205,18 @@
 		
 		dojo.addOnLoad(
 			function() {
-				currentLesson=document.getElementById('currentLesson');
+				audio=uow.getAudio().then(function(){
+					currentLesson=document.getElementById('currentLesson');
 
-				// Pick the lesson or free mode based on the hash part of the url
-				initialize(dojo.hash());
+					// Pick the lesson or free mode based on the hash part of the url
+					initialize(dojo.hash());
 				
-				// Determine the best size for letter display on load
-				var letterHeight = document.getElementById('Main').clientHeight * (3/4);
-				var letterElement = document.getElementById('letterDisplay');
+					// Determine the best size for letter display on load
+					var letterHeight = document.getElementById('Main').clientHeight * (3/4);
+					var letterElement = document.getElementById('letterDisplay');
 				
-				letterElement.setAttribute('style', 'font-size:' + letterHeight + 'px');
+					letterElement.setAttribute('style', 'font-size:' + letterHeight + 'px');
+				});
 			}
 		);
 	</script>
