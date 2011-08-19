@@ -27,7 +27,6 @@ dojo.declare('tht.Main', null, {
 	
     constructor: function() {
 	   currentLesson=document.getElementById('currentLesson');
-	   console.log(currentLesson);
     }
 });
 
