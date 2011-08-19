@@ -27,6 +27,7 @@
 		// Get the audio api controller
 		var audio = uow.getAudio();
 		var currentLesson="";
+		var playingState="none";
 
 		// Listen for key events
 		uow.ui.connectKeys();
@@ -40,7 +41,7 @@
 		// optional stop parameter preempts the previous speech
 		function talk(message, stop) {
 			console.log(message + "\t" + stop);
-			app.playingState="saying";
+			playingState="saying";
 			audio.then(function(a) {
 			  if(stop) {
 				a.stop();
@@ -48,7 +49,7 @@
 			  //Set audio properties
 			  a.setProperty({name : 'rate', value : app.speechRate});
 			  a.setProperty({name : 'volume', value : app.masterVolume*app.speechVolume});
-			  a.say({text : message}).anyAfter(function(){app.playingState="none";});
+			  a.say({text : message}).anyAfter(function(){playingState="none";});
 			});
 			
 			footer = document.getElementById("footer");
@@ -69,10 +70,10 @@
 		
 		// Pass urls to this function to have the sound played
 		function playSound(soundUrl) {
-			app.playingState="playing";
+			playingState="playing";
 			audio.then(function(a) {
 			  a.setProperty({name : 'volume', value : app.masterVolume*app.soundVolume});
-			  a.play({url : soundUrl}).anyAfter(function(){app.playingState="none";});
+			  a.play({url : soundUrl}).anyAfter(function(){playingState="none";});
 			});
 		}
 		

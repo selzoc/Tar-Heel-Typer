@@ -23,7 +23,6 @@ dojo.declare('tht.Main', null, {
 	speechVolume: 1.0,
 	soundVolume: 1.0,
 	speechRate: 200,
-	playingState: "none",
 	
     constructor: function() {
 		dojo.subscribe('/org/hark/prefs/response', this, this.prefsCallback);
