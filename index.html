@@ -25,7 +25,7 @@
     <script type="text/javascript" src="distance.js"></script>
     <script type="text/javascript">
 		// Get the audio api controller
-		var audio = uow.getAudio();
+		//var audio = uow.getAudio();
 		
 		// Listen for key events
 		uow.ui.connectKeys();
@@ -40,7 +40,7 @@
 		function talk(message, stop) {
 			console.log(message + "\t" + stop);
 			app.playingState="saying";
-			audio.then(function(a) {
+			app.audio.then(function(a) {
 			  if(stop) {
 				a.stop();
 			  }
@@ -69,7 +69,7 @@
 		// Pass urls to this function to have the sound played
 		function playSound(soundUrl) {
 			app.playingState="playing";
-			audio.then(function(a) {
+			app.audio.then(function(a) {
 			  a.setProperty({name : 'volume', value : app.masterVolume*app.soundVolume});
 			  a.play({url : soundUrl}).anyAfter(function(){app.playingState="none";});
 			});

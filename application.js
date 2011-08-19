@@ -25,12 +25,15 @@ dojo.declare('tht.Main', null, {
 	speechRate: 200,
 	currentLesson: "",
 	playingState: "none",
+	audio: null,
 	
     constructor: function() {
 	   currentLesson=document.getElementById('currentLesson');
 	   
-	   dojo.subscribe('/org/hark/prefs/response', this, this.prefsCallback);
-	   dojo.publish('/org/hark/prefs/request');
+	   audio=uow.getAudio().then(dojo.hitch(this, function(){
+	       dojo.subscribe('/org/hark/prefs/response', this, this.prefsCallback);
+	       dojo.publish('/org/hark/prefs/request');
+	   }));
     },
 	
 	prefsCallback: function(prefs, which) {
@@ -40,10 +43,10 @@ dojo.declare('tht.Main', null, {
 		this.speechRate=prefs.speechRate;
 		
 		if(audio && this.playingState=="playing")
-			audio.setProperty({name : 'volume', value : this.masterVolume*this.soundVolume, immediate : true});
+			this.audio.setProperty({name : 'volume', value : this.masterVolume*this.soundVolume, immediate : true});
 			
 		else if(audio && this.playingState=="saying")
-			audio.setProperty({name : 'volume', value : this.masterVolume*this.speechVolume, immediate : true});
+			this.audio.setProperty({name : 'volume', value : this.masterVolume*this.speechVolume, immediate : true});
 	}
 });
 
