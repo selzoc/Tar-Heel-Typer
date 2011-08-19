@@ -173,7 +173,7 @@
 			lesson = lessons[lessonName];
 			
 			app.currentLesson.innerHTML = lesson.name;
-			
+			console.log("Current Lesson Inner HTML: "+app.currentLesson.innerHTML);
 			talk(lesson.prompts[index], true);
 		}
 		
