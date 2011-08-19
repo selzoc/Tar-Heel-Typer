@@ -28,12 +28,11 @@ dojo.declare('tht.Main', null, {
 	//audio: null,
 	
     constructor: function() {
-	   currentLesson=document.getElementById('currentLesson');
+		currentLesson=document.getElementById('currentLesson');
 	   
-	   /**audio=uow.getAudio().then(dojo.hitch(this, function(){
-	       dojo.subscribe('/org/hark/prefs/response', this, this.prefsCallback);
-	       dojo.publish('/org/hark/prefs/request');
-	   }));*/
+		dojo.subscribe('/org/hark/prefs/response', this, this.prefsCallback);
+		dojo.publish('/org/hark/prefs/request');
+	   
     },
 	
 	prefsCallback: function(prefs, which) {
