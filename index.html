@@ -25,8 +25,8 @@
     <script type="text/javascript" src="distance.js"></script>
     <script type="text/javascript">
 		// Get the audio api controller
-		var audio = uow.getAudio();
-		var currentLesson=document.getElementById('currentLesson');
+		//var audio = uow.getAudio();
+		//var currentLesson=document.getElementById('currentLesson');
 		
 		// Listen for key events
 		uow.ui.connectKeys();
@@ -40,12 +40,13 @@
 		// optional stop parameter preempts the previous speech
 		function talk(message, stop) {
 			console.log(message + "\t" + stop);
-			audio.then(function(a) {
+			app.audio.then(function(a) {
 			  if(stop) {
 				a.stop();
 			  }
-			  // Slow down the rate to 150 WPM
-			  a.setProperty({name : 'rate', value : 150});
+			  //Set audio properties
+			  //a.setProperty({name : 'rate', value : app.speechRate});
+			  //a.setProperty({name : 'volume', value : app.masterVolume*app.speechVolume, immediate : true});
 			  a.say({text : message});
 			});
 			
@@ -67,8 +68,9 @@
 		
 		// Pass urls to this function to have the sound played
 		function playSound(soundUrl) {
-			audio.then(function(a) {
-			  a.play({url : soundUrl});
+			app.audio.then(function(a) {
+			  //a.setProperty({name : 'volume', value : app.masterVolume*app.soundVolume, immediate : true});
+			  a.play({url : soundUrl, channel : 'sounds'});
 			});
 		}
 		
@@ -159,7 +161,7 @@
 			sequenceIndex = 0;
 			lesson = lessons[lessonName];
 			
-			//currentLesson.innerHTML = lesson.name;
+			//app.currentLesson.innerHTML = lesson.name;
 			
 			talk(lesson.prompts[index], true);
 		}
@@ -194,7 +196,7 @@
 			else {
 				talk("Try typing a letter in free mode.", true);
 				dojo.subscribe('/uow/key/up', freemodeCallback);
-				//currentLesson.innerHTML = "Free mode";
+				//app.currentLesson.innerHTML = "Free mode";
 			}
 		}
 		
