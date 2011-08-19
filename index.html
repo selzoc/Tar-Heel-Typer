@@ -42,7 +42,7 @@
 		function talk(message, stop) {
 			console.log(message + "\t" + stop);
 			playingState="saying";
-			
+			console.log(audio);
 			if(stop) {
 				audio.stop();
 			}
