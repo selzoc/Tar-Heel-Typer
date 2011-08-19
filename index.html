@@ -25,10 +25,10 @@
     <script type="text/javascript" src="distance.js"></script>
     <script type="text/javascript">
 		// Get the audio api controller
-		var audio = uow.getAudio().then(function(){
+		var audio = uow.getAudio();/**.then(function(){
 		   dojo.subscribe('/org/hark/prefs/response', prefsCallback);
 		   dojo.publish('/org/hark/prefs/request');
-	   	});
+	   	});*/
 		
 		//var currentLesson=document.getElementById('currentLesson');
 		
