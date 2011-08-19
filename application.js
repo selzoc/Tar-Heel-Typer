@@ -27,7 +27,17 @@ dojo.declare('tht.Main', null, {
 	
     constructor: function() {
 	   currentLesson=document.getElementById('currentLesson');
-    }
+	   
+	   dojo.subscribe('/org/hark/prefs/response', this, this.prefsCallback);
+	   dojo.publish('/org/hark/prefs/request');
+    },
+	
+	prefsCallback: function(prefs, which) {
+			this.masterVolume=prefs.volume;
+			this.speechVolume=prefs.speechVolume;
+			this.soundVolume=prefs.soundVolume;
+			this.speechRate=prefs.speechRate;
+	}
 });
 
 dojo.ready(function() {
