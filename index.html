@@ -23,13 +23,11 @@
     <script type="text/javascript" src="bindings.js"></script>
     <script type="text/javascript" src="lessons.js"></script>
     <script type="text/javascript" src="distance.js"></script>
-  </head>
-  <body class="claro">
-	<script type="text/javascript">
+    <script type="text/javascript">
 		// Get the audio api controller
 		var audio = uow.getAudio();
 		var currentLesson=document.getElementById('currentLesson');
-		
+		console.log("Current Lesson: "+currentLesson);
 		// Listen for key events
 		uow.ui.connectKeys();
 		
@@ -213,6 +211,8 @@
 			}
 		);
 	</script>
+  </head>
+  <body class="claro">
     <div dojoType="dijit.layout.BorderContainer" liveSplitters="true">
       <div dojoType="dijit.layout.ContentPane" region="top" splitter="false">
         <h1>Tar Heel Typer</h1>
