@@ -27,7 +27,7 @@
 		// Get the audio api controller
 		var audio = uow.getAudio();
 		var currentLesson=document.getElementById('currentLesson');
-		console.log("Current Lesson: "+currentLesson);
+		console.log(currentLesson);
 		// Listen for key events
 		uow.ui.connectKeys();
 		
@@ -159,7 +159,7 @@
 			sequenceIndex = 0;
 			lesson = lessons[lessonName];
 			
-			currentLesson.innerHTML = lesson.name;
+			//currentLesson.innerHTML = lesson.name;
 			
 			talk(lesson.prompts[index], true);
 		}
@@ -194,7 +194,7 @@
 			else {
 				talk("Try typing a letter in free mode.", true);
 				dojo.subscribe('/uow/key/up', freemodeCallback);
-				currentLesson.innerHTML = "Free mode";
+				//currentLesson.innerHTML = "Free mode";
 			}
 		}
 		
