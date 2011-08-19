@@ -22,7 +22,7 @@ dojo.declare('tht.Main', null, {
 	masterVolume: 1.0,
 	speechVolume: 1.0,
 	soundVolume: 1.0,
-	speechRate: 1.0,
+	speechRate: 200,
 	currentLesson: "",
 	
     constructor: function() {
