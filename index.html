@@ -56,8 +56,8 @@
 				a.stop();
 			  }
 			  //Set audio properties
-			  //a.setProperty({name : 'rate', value : app.speechRate});
-			  //a.setProperty({name : 'volume', value : app.masterVolume*app.speechVolume});
+			  a.setProperty({name : 'rate', value : app.speechRate});
+			  a.setProperty({name : 'volume', value : app.masterVolume*app.speechVolume});
 			  a.say({text : message});
 			});
 			
