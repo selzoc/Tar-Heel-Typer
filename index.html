@@ -69,7 +69,7 @@
 		function playSound(soundUrl) {
 			audio.then(function(a) {
 			  a.setProperty({name : 'volume', value : app.masterVolume*app.soundVolume});
-			  a.play({url : soundUrl, channel : 'sounds'});
+			  a.play({url : soundUrl});
 			});
 		}
 		
