@@ -26,7 +26,6 @@
     <script type="text/javascript">
 		// Get the audio api controller
 		var audio = uow.getAudio();
-		//var currentLesson=document.getElementById('currentLesson');
 		
 		// Listen for key events
 		uow.ui.connectKeys();
@@ -35,13 +34,6 @@
 		var lesson;
 		var index;
 		var sequenceIndex;
-		
-		function prefsCallback(prefs, which) {
-			app.masterVolume=prefs.volume;
-			app.speechVolume=prefs.speechVolume;
-			app.soundVolume=prefs.soundVolume;
-			app.speechRate=prefs.speechRate;
-		}
 
 		// Pass messages to this function to have them spoken and displayed in the footer
 		// optional stop parameter preempts the previous speech
@@ -52,8 +44,8 @@
 				a.stop();
 			  }
 			  //Set audio properties
-			  a.setProperty({name : 'rate', value : app.speechRate});
-			  a.setProperty({name : 'volume', value : app.masterVolume*app.speechVolume});
+			  //a.setProperty({name : 'rate', value : app.speechRate});
+			  //a.setProperty({name : 'volume', value : app.masterVolume*app.speechVolume});
 			  a.say({text : message});
 			});
 			
@@ -76,7 +68,7 @@
 		// Pass urls to this function to have the sound played
 		function playSound(soundUrl) {
 			audio.then(function(a) {
-			  a.setProperty({name : 'volume', value : app.masterVolume*app.soundVolume});
+			  //a.setProperty({name : 'volume', value : app.masterVolume*app.soundVolume});
 			  a.play({url : soundUrl, channel : 'sounds'});
 			});
 		}
