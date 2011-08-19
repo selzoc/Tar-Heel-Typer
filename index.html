@@ -42,15 +42,15 @@
 		function talk(message, stop) {
 			console.log(message + "\t" + stop);
 			playingState="saying";
-			audio.then(function(a) {
-			  if(stop) {
-				a.stop();
-			  }
-			  //Set audio properties
-			  a.setProperty({name : 'rate', value : app.speechRate});
-			  a.setProperty({name : 'volume', value : app.masterVolume*app.speechVolume});
-			  a.say({text : message}).anyAfter(function(){playingState="none";});
-			});
+			
+			if(stop) {
+				audio.stop();
+			}
+			//Set audio properties
+			audio.setProperty({name : 'rate', value : app.speechRate});
+			audio.setProperty({name : 'volume', value : app.masterVolume*app.speechVolume});
+			audio.say({text : message}).anyAfter(function(){playingState="none";});
+			
 			
 			footer = document.getElementById("footer");
 			footer.innerHTML = message;
@@ -71,10 +71,9 @@
 		// Pass urls to this function to have the sound played
 		function playSound(soundUrl) {
 			playingState="playing";
-			audio.then(function(a) {
-			  a.setProperty({name : 'volume', value : app.masterVolume*app.soundVolume});
-			  a.play({url : soundUrl}).anyAfter(function(){playingState="none";});
-			});
+			
+			audio.setProperty({name : 'volume', value : app.masterVolume*app.soundVolume});
+			audio.play({url : soundUrl}).anyAfter(function(){playingState="none";});
 		}
 		
 		// Display stuff big in the center of the screen
