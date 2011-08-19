@@ -27,11 +27,6 @@
 		// Get the audio api controller
 		var audio = null;
 		var currentLesson="";
-		var playingState="none";
-		
-		var masterVolume=1.0;
-		var speechVolume=1.0;
-		var soundVolume=1.0;
 		
 		// Listen for key events
 		uow.ui.connectKeys();
@@ -43,32 +38,21 @@
 		
 		//Changes audio preferences whenever game prefs change
 		function prefsCallback(prefs, which) {
-			masterVolume=prefs.volume;
-			speechVolume=prefs.speechVolume;
-			soundVolume=prefs.soundVolume;
-			
 			audio.setProperty({name : 'rate', value : prefs.speechRate, immediate : true});
-
-			if(playingState=="playing")
-				audio.setProperty({name : 'volume', value : masterVolume*soundVolume, immediate : true});
-			
-			else if(playingState=="saying")
-				audio.setProperty({name : 'volume', value : masterVolume*speechVolume, immediate : true});
+			audio.setProperty({name : 'volume', value : prefs.volume*prefs.speechVolume, immediate : true});
 		}
 
 		// Pass messages to this function to have them spoken and displayed in the footer
 		// optional stop parameter preempts the previous speech
 		function talk(message, stop) {
 			console.log(message + "\t" + stop);
-			playingState="saying";
 			
 			if(stop) {
 				audio.stop();
 			}
 
 			//Set audio properties
-			audio.setProperty({name : 'volume', value : masterVolume*speechVolume});
-			audio.say({text : message}).anyAfter(function(){playingState="none";});
+			audio.say({text : message});
 			
 			footer = document.getElementById("footer");
 			footer.innerHTML = message;
@@ -88,10 +72,8 @@
 		
 		// Pass urls to this function to have the sound played
 		function playSound(soundUrl) {
-			playingState="playing";
-			
-			audio.setProperty({name : 'volume', value : masterVolume*soundVolume});
-			audio.play({url : soundUrl}).anyAfter(function(){playingState="none";});
+			//audio.setProperty({name : 'volume', value : masterVolume*soundVolume});
+			audio.play({url : soundUrl});
 		}
 		
 		// Display stuff big in the center of the screen
