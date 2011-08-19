@@ -23,14 +23,10 @@ dojo.declare('tht.Main', null, {
 	speechVolume: 1.0,
 	soundVolume: 1.0,
 	speechRate: 1.0,
-	currentLesson: null,
+	currentLesson: "",
 	
     constructor: function() {
 	   currentLesson=document.getElementById('currentLesson');
-	   /**audio=uow.getAudio().then(dojo.hitch(this, function(){
-		   dojo.subscribe('/org/hark/prefs/response', this, this.prefsCallback);
-		   dojo.publish('/org/hark/prefs/request');
-	   }));*/
     }
 });
 
