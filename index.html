@@ -56,6 +56,7 @@
 				a.stop();
 			  }
 			  //Set audio properties
+			  console.log(a);
 			  a.setProperty({name : 'rate', value : app.speechRate});
 			  a.setProperty({name : 'volume', value : app.masterVolume*app.speechVolume});
 			  a.say({text : message});
