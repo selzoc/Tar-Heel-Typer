@@ -25,7 +25,11 @@
     <script type="text/javascript" src="distance.js"></script>
     <script type="text/javascript">
 		// Get the audio api controller
-		//var audio = uow.getAudio();
+		var audio = uow.getAudio().then(function(){
+		   dojo.subscribe('/org/hark/prefs/response', prefsCallback);
+		   dojo.publish('/org/hark/prefs/request');
+	   	});
+		
 		//var currentLesson=document.getElementById('currentLesson');
 		
 		// Listen for key events
@@ -36,17 +40,24 @@
 		var index;
 		var sequenceIndex;
 		
+		function prefsCallback(prefs, which) {
+			app.masterVolume=prefs.volume;
+			app.speechVolume=prefs.speechVolume;
+			app.soundVolume=prefs.soundVolume;
+			app.speechRate=prefs.speechRate;
+		}
+
 		// Pass messages to this function to have them spoken and displayed in the footer
 		// optional stop parameter preempts the previous speech
 		function talk(message, stop) {
 			console.log(message + "\t" + stop);
-			app.audio.then(function(a) {
+			audio.then(function(a) {
 			  if(stop) {
 				a.stop();
 			  }
 			  //Set audio properties
-			  //a.setProperty({name : 'rate', value : app.speechRate});
-			  //a.setProperty({name : 'volume', value : app.masterVolume*app.speechVolume, immediate : true});
+			  a.setProperty({name : 'rate', value : app.speechRate});
+			  a.setProperty({name : 'volume', value : app.masterVolume*app.speechVolume});
 			  a.say({text : message});
 			});
 			
@@ -68,8 +79,8 @@
 		
 		// Pass urls to this function to have the sound played
 		function playSound(soundUrl) {
-			app.audio.then(function(a) {
-			  //a.setProperty({name : 'volume', value : app.masterVolume*app.soundVolume, immediate : true});
+			audio.then(function(a) {
+			  a.setProperty({name : 'volume', value : app.masterVolume*app.soundVolume});
 			  a.play({url : soundUrl, channel : 'sounds'});
 			});
 		}

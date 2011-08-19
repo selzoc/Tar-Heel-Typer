@@ -19,22 +19,19 @@ var app=null;
 // as our main controller to do stuff across the whole app and kick off the
 // app when the page loads
 dojo.declare('tht.Main', null, {
-	audio: null,
+	masterVolume: 1.0,
+	speechVolume: 1.0,
+	soundVolume: 1.0,
+	speechRate: 1.0,
 	currentLesson: null,
 	
     constructor: function() {
 	   currentLesson=document.getElementById('currentLesson');
-	   audio=uow.getAudio().then(dojo.hitch(this, function(){
+	   /**audio=uow.getAudio().then(dojo.hitch(this, function(){
 		   dojo.subscribe('/org/hark/prefs/response', this, this.prefsCallback);
 		   dojo.publish('/org/hark/prefs/request');
-	   }));
-    },
-	
-	prefsCallback: function(prefs, which) {
-		audio.setProperty({name : 'volume', value : prefs.volume*prefs.speechVolume, immediate : true});
-		audio.setProperty({name : 'volume', value : prefs.volume*prefs.soundVolume, channel : 'sounds', immediate : true});
-		audio.setProperty({name : 'rate', value : prefs.speechRate, immediate : true});
-	}
+	   }));*/
+    }
 });
 
 dojo.ready(function() {
