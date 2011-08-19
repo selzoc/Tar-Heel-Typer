@@ -23,16 +23,11 @@ dojo.declare('tht.Main', null, {
 	speechVolume: 1.0,
 	soundVolume: 1.0,
 	speechRate: 200,
-	currentLesson: "",
 	playingState: "none",
-	//audio: null,
 	
     constructor: function() {
-		currentLesson=document.getElementById('currentLesson');
-	   
 		dojo.subscribe('/org/hark/prefs/response', this, this.prefsCallback);
 		dojo.publish('/org/hark/prefs/request');
-	   
     },
 	
 	prefsCallback: function(prefs, which) {

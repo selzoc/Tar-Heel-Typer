@@ -26,7 +26,8 @@
     <script type="text/javascript">
 		// Get the audio api controller
 		var audio = uow.getAudio();
-		
+		var currentLesson="";
+
 		// Listen for key events
 		uow.ui.connectKeys();
 		
@@ -162,7 +163,7 @@
 			sequenceIndex = 0;
 			lesson = lessons[lessonName];
 			
-			app.currentLesson.innerHTML = lesson.name;
+			currentLesson.innerHTML = lesson.name;
 			console.log(lesson);
 			talk(lesson.prompts[index], true);
 		}
@@ -197,12 +198,14 @@
 			else {
 				talk("Try typing a letter in free mode.", true);
 				dojo.subscribe('/uow/key/up', freemodeCallback);
-				app.currentLesson.innerHTML = "Free mode";
+				currentLesson.innerHTML = "Free mode";
 			}
 		}
 		
 		dojo.addOnLoad(
 			function() {
+				currentLesson=document.getElementById('currentLesson');
+
 				// Pick the lesson or free mode based on the hash part of the url
 				initialize(dojo.hash());
 				
