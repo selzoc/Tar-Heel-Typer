@@ -206,7 +206,7 @@
 			function() {
 				audio=uow.getAudio().then(function(){
 					currentLesson=document.getElementById('currentLesson');
-
+					console.log("Audio: "+audio);
 					// Pick the lesson or free mode based on the hash part of the url
 					initialize(dojo.hash());
 				
