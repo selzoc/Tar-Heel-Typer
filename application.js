@@ -33,7 +33,6 @@ dojo.declare('tht.Main', null, {
     },
 	
 	prefsCallback: function(prefs, which) {
-		console.log(prefs);
 		this.masterVolume=prefs.volume;
 		this.speechVolume=prefs.speechVolume;
 		this.soundVolume=prefs.soundVolume;
