@@ -42,7 +42,7 @@
 		function talk(message, stop) {
 			console.log(message + "\t" + stop);
 			playingState="saying";
-			console.log(audio);
+			
 			if(stop) {
 				audio.stop();
 			}
@@ -204,9 +204,10 @@
 		
 		dojo.addOnLoad(
 			function() {
-				audio=uow.getAudio().then(function(){
+				uow.getAudio().then(function(a){
+					audio=a;
 					currentLesson=document.getElementById('currentLesson');
-					console.log("Audio: "+audio);
+					
 					// Pick the lesson or free mode based on the hash part of the url
 					initialize(dojo.hash());
 				
