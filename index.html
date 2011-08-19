@@ -28,6 +28,11 @@
 		var audio = null;
 		var currentLesson="";
 		
+		var playingSound=false;
+		var masterVolume=1.0;
+		var speechVolume=1.0;
+		var soundVolume=1.0;
+		
 		// Listen for key events
 		uow.ui.connectKeys();
 		
@@ -38,8 +43,12 @@
 		
 		//Changes audio preferences whenever game prefs change
 		function prefsCallback(prefs, which) {
+			masterVolume=prefs.volume;
+			speechVolume=prefs.speechVolume;
+			soundVolume=prefs.soundVolume;
+
 			audio.setProperty({name : 'rate', value : prefs.speechRate, immediate : true});
-			audio.setProperty({name : 'volume', value : prefs.volume*prefs.speechVolume, immediate : true});
+			audio.setProperty({name : 'volume', value : prefs.volume*(playingSound ? prefs.soundVolume : prefs.speechVolume), immediate : true});
 		}
 
 		// Pass messages to this function to have them spoken and displayed in the footer
@@ -72,8 +81,15 @@
 		
 		// Pass urls to this function to have the sound played
 		function playSound(soundUrl) {
-			//audio.setProperty({name : 'volume', value : masterVolume*soundVolume});
-			audio.play({url : soundUrl});
+			var def=audio.play({url : soundUrl});
+			def.callBefore(function(){
+				playingSound=true;
+				audio.setProperty({name : 'volume', value : masterVolume*soundVolume, immediate : true});
+			});
+			def.callAfter(function(){
+				playingSound=false;
+				audio.setProperty({name : 'volume', value : masterVolume*speechVolume, immediate : true});
+			});
 		}
 		
 		// Display stuff big in the center of the screen
