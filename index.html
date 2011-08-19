@@ -56,9 +56,8 @@
 				a.stop();
 			  }
 			  //Set audio properties
-			  console.log(a);
-			  a.setProperty({name : 'rate', value : app.speechRate});
-			  a.setProperty({name : 'volume', value : app.masterVolume*app.speechVolume});
+			  //a.setProperty({name : 'rate', value : app.speechRate});
+			  //a.setProperty({name : 'volume', value : app.masterVolume*app.speechVolume});
 			  a.say({text : message});
 			});
 			
@@ -81,7 +80,7 @@
 		// Pass urls to this function to have the sound played
 		function playSound(soundUrl) {
 			audio.then(function(a) {
-			  a.setProperty({name : 'volume', value : app.masterVolume*app.soundVolume});
+			  //a.setProperty({name : 'volume', value : app.masterVolume*app.soundVolume});
 			  a.play({url : soundUrl, channel : 'sounds'});
 			});
 		}
