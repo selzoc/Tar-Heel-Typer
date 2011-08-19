@@ -36,6 +36,20 @@
 		var lesson;
 		var index;
 		var sequenceIndex;
+		
+		//Changes audio preferences whenever game prefs change
+		function prefsCallback(prefs, which) {
+			app.masterVolume=prefs.volume;
+			app.speechVolume=prefs.speechVolume;
+			app.soundVolume=prefs.soundVolume;
+			app.speechRate=prefs.speechRate;
+		
+			/**if(audio && this.playingState=="playing")
+				this.audio.setProperty({name : 'volume', value : this.masterVolume*this.soundVolume, immediate : true});
+			
+			else if(audio && this.playingState=="saying")
+				this.audio.setProperty({name : 'volume', value : this.masterVolume*this.speechVolume, immediate : true});*/
+		}
 
 		// Pass messages to this function to have them spoken and displayed in the footer
 		// optional stop parameter preempts the previous speech
@@ -46,11 +60,11 @@
 			if(stop) {
 				audio.stop();
 			}
+
 			//Set audio properties
 			audio.setProperty({name : 'rate', value : app.speechRate});
 			audio.setProperty({name : 'volume', value : app.masterVolume*app.speechVolume});
 			audio.say({text : message}).anyAfter(function(){playingState="none";});
-			
 			
 			footer = document.getElementById("footer");
 			footer.innerHTML = message;
@@ -208,6 +222,9 @@
 					audio=a;
 					currentLesson=document.getElementById('currentLesson');
 					
+					dojo.subscribe('/org/hark/prefs/response', prefsCallback);
+					dojo.publish('/org/hark/prefs/request');
+
 					// Pick the lesson or free mode based on the hash part of the url
 					initialize(dojo.hash());
 				

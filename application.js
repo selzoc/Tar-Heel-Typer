@@ -25,22 +25,8 @@ dojo.declare('tht.Main', null, {
 	speechRate: 200,
 	
     constructor: function() {
-		dojo.subscribe('/org/hark/prefs/response', this, this.prefsCallback);
-		dojo.publish('/org/hark/prefs/request');
-    },
-	
-	prefsCallback: function(prefs, which) {
-		this.masterVolume=prefs.volume;
-		this.speechVolume=prefs.speechVolume;
-		this.soundVolume=prefs.soundVolume;
-		this.speechRate=prefs.speechRate;
 		
-		/**if(audio && this.playingState=="playing")
-			this.audio.setProperty({name : 'volume', value : this.masterVolume*this.soundVolume, immediate : true});
-			
-		else if(audio && this.playingState=="saying")
-			this.audio.setProperty({name : 'volume', value : this.masterVolume*this.speechVolume, immediate : true});*/
-	}
+    }
 });
 
 dojo.ready(function() {
