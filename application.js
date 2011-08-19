@@ -13,17 +13,10 @@ dojo.require('dijit.layout.BorderContainer');
 dojo.require('dijit.layout.ContentPane');
 dojo.require('dojo.hash');
 
-var app=null;
-
 // adjust the namespace if you changed it in index.html; this widget serves
 // as our main controller to do stuff across the whole app and kick off the
 // app when the page loads
 dojo.declare('tht.Main', null, {
-	masterVolume: 1.0,
-	speechVolume: 1.0,
-	soundVolume: 1.0,
-	speechRate: 200,
-	
     constructor: function() {
 		
     }
@@ -33,5 +26,5 @@ dojo.ready(function() {
     // build our main widget when everything is ready; adjust the name here
     // if you change it above but otherwise leave this alone and do all 
     // work in the widget above
-    app = new tht.Main();
-});
+    var app = new tht.Main();
+})

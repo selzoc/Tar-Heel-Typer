@@ -28,7 +28,11 @@
 		var audio = null;
 		var currentLesson="";
 		var playingState="none";
-
+		
+		var masterVolume=1.0;
+		var speechVolume=1.0;
+		var soundVolume=1.0;
+		
 		// Listen for key events
 		uow.ui.connectKeys();
 		
@@ -39,16 +43,17 @@
 		
 		//Changes audio preferences whenever game prefs change
 		function prefsCallback(prefs, which) {
-			app.masterVolume=prefs.volume;
-			app.speechVolume=prefs.speechVolume;
-			app.soundVolume=prefs.soundVolume;
-			app.speechRate=prefs.speechRate;
-		
-			/**if(audio && this.playingState=="playing")
-				this.audio.setProperty({name : 'volume', value : this.masterVolume*this.soundVolume, immediate : true});
+			masterVolume=prefs.volume;
+			speechVolume=prefs.speechVolume;
+			soundVolume=prefs.soundVolume;
 			
-			else if(audio && this.playingState=="saying")
-				this.audio.setProperty({name : 'volume', value : this.masterVolume*this.speechVolume, immediate : true});*/
+			audio.setProperty({name : 'rate', value : prefs.speechRate, immediate : true});
+
+			if(playingState=="playing")
+				audio.setProperty({name : 'volume', value : masterVolume*soundVolume, immediate : true});
+			
+			else if(playingState=="saying")
+				audio.setProperty({name : 'volume', value : masterVolume*speechVolume, immediate : true});
 		}
 
 		// Pass messages to this function to have them spoken and displayed in the footer
@@ -62,8 +67,7 @@
 			}
 
 			//Set audio properties
-			audio.setProperty({name : 'rate', value : app.speechRate});
-			audio.setProperty({name : 'volume', value : app.masterVolume*app.speechVolume});
+			audio.setProperty({name : 'volume', value : masterVolume*speechVolume});
 			audio.say({text : message}).anyAfter(function(){playingState="none";});
 			
 			footer = document.getElementById("footer");
@@ -86,7 +90,7 @@
 		function playSound(soundUrl) {
 			playingState="playing";
 			
-			audio.setProperty({name : 'volume', value : app.masterVolume*app.soundVolume});
+			audio.setProperty({name : 'volume', value : masterVolume*soundVolume});
 			audio.play({url : soundUrl}).anyAfter(function(){playingState="none";});
 		}
 		
