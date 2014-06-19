@@ -18,7 +18,7 @@ dojo.require('dojo.hash');
 // app when the page loads
 dojo.declare('tht.Main', null, {
     constructor: function() {
-       
+		
     }
 });
 
@@ -26,5 +26,5 @@ dojo.ready(function() {
     // build our main widget when everything is ready; adjust the name here
     // if you change it above but otherwise leave this alone and do all 
     // work in the widget above
-    var app = new tht.Main();        
-});
+    var app = new tht.Main();
+})

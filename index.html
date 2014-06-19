@@ -8,7 +8,7 @@
       @import "http://ajax.googleapis.com/ajax/libs/dojo/1.5.0/dijit/themes/claro/claro.css";
       @import "css/application.css";
     </style>
-	<script type="text/javascript">
+    <script type="text/javascript">
         var djConfig = {
             isDebug: false,
             parseOnLoad: true,
@@ -16,16 +16,22 @@
             modulePaths: {'tht' : 'sounds'}
         };
     </script>
-	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/dojo/1.5.0/dojo/dojo.xd.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/dojo/1.5.0/dojo/dojo.xd.js"></script>
     <script type="text/javascript" src="/libs/uow/trace.js"></script>
     <script type="text/javascript" src="/libs/uow.js"></script>
     <script type="text/javascript" src="application.js"></script>
-	<script type="text/javascript" src="bindings.js"></script>
-	<script type="text/javascript" src="lessons.js"></script>
-	<script type="text/javascript" src="distance.js"></script>
-	<script type="text/javascript">
+    <script type="text/javascript" src="bindings.js"></script>
+    <script type="text/javascript" src="lessons.js"></script>
+    <script type="text/javascript" src="distance.js"></script>
+    <script type="text/javascript">
 		// Get the audio api controller
-		var audio = uow.getAudio();
+		var audio = null;
+		var currentLesson="";
+		
+		var playingSound=false;
+		var masterVolume=1.0;
+		var speechVolume=1.0;
+		var soundVolume=1.0;
 		
 		// Listen for key events
 		uow.ui.connectKeys();
@@ -35,18 +41,27 @@
 		var index;
 		var sequenceIndex;
 		
+		//Changes audio preferences whenever game prefs change
+		function prefsCallback(prefs, which) {
+			masterVolume=prefs.volume;
+			speechVolume=prefs.speechVolume;
+			soundVolume=prefs.soundVolume;
+
+			audio.setProperty({name : 'rate', value : prefs.speechRate, immediate : true});
+			audio.setProperty({name : 'volume', value : prefs.volume*(playingSound ? prefs.soundVolume : prefs.speechVolume), immediate : true});
+		}
+
 		// Pass messages to this function to have them spoken and displayed in the footer
 		// optional stop parameter preempts the previous speech
 		function talk(message, stop) {
 			console.log(message + "\t" + stop);
-			audio.then(function(a) {
-			  if(stop) {
-				a.stop();
-			  }
-			  // Slow down the rate to 150 WPM
-			  a.setProperty({name : 'rate', value : 150});
-			  a.say({text : message});
-			});
+			
+			if(stop) {
+				audio.stop();
+			}
+
+			//Set audio properties
+			audio.say({text : message});
 			
 			footer = document.getElementById("footer");
 			footer.innerHTML = message;
@@ -66,8 +81,14 @@
 		
 		// Pass urls to this function to have the sound played
 		function playSound(soundUrl) {
-			audio.then(function(a) {
-			  a.play({url : soundUrl});
+			var def=audio.play({url : soundUrl});
+			def.callBefore(function(){
+				playingSound=true;
+				audio.setProperty({name : 'volume', value : masterVolume*soundVolume, immediate : true});
+			});
+			def.callAfter(function(){
+				playingSound=false;
+				audio.setProperty({name : 'volume', value : masterVolume*speechVolume, immediate : true});
 			});
 		}
 		
@@ -159,7 +180,7 @@
 			lesson = lessons[lessonName];
 			
 			currentLesson.innerHTML = lesson.name;
-			
+			console.log(lesson);
 			talk(lesson.prompts[index], true);
 		}
 		
@@ -199,14 +220,22 @@
 		
 		dojo.addOnLoad(
 			function() {
-				// Pick the lesson or free mode based on the hash part of the url
-				initialize(dojo.hash());
+				uow.getAudio().then(function(a){
+					audio=a;
+					currentLesson=document.getElementById('currentLesson');
+					
+					dojo.subscribe('/org/hark/prefs/response', prefsCallback);
+					dojo.publish('/org/hark/prefs/request');
+
+					// Pick the lesson or free mode based on the hash part of the url
+					initialize(dojo.hash());
 				
-				// Determine the best size for letter display on load
-				var letterHeight = document.getElementById('Main').clientHeight * (3/4);
-				var letterElement = document.getElementById('letterDisplay');
+					// Determine the best size for letter display on load
+					var letterHeight = document.getElementById('Main').clientHeight * (3/4);
+					var letterElement = document.getElementById('letterDisplay');
 				
-				letterElement.setAttribute('style', 'font-size:' + letterHeight + 'px');
+					letterElement.setAttribute('style', 'font-size:' + letterHeight + 'px');
+				});
 			}
 		);
 	</script>
